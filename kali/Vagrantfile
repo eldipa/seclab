@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.provider 'virtualbox' do |vb|
+    vb.check_guest_additions = false
+    vb.name = 'Kali'
+    vb.memory = 1280
+    vb.cpus = '2'
+  end
+
+  config.vm.hostname = "kali"
+
+  config.vm.box = "kalilinux/rolling"
+  config.vm.box_version = "2023.4.0"
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+
+  config.vm.network "private_network", ip: "192.168.10.2", virtualbox__intnet: "introsec"
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.graceful_halt_timeout = 5
+  config.vm.box_check_update = false
+end
