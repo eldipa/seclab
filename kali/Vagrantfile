@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.box = "kalilinux/rolling"
-  config.vm.box_version = "2023.4.0
+  config.vm.box_version = "2023.4.0"
   config.vm.hostname = "kali"
   config.ssh.username = "vagrant"
   config.ssh.password = "vagrant"
