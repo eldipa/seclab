@@ -3,6 +3,15 @@
 set -e
 exec > /dev/null 2>&1
 
+function finish() {
+    # restart the vm everything is correctly up
+    touch /home/vagrant/finish
+    rm -fR /home/vagrant/*
+    shutdown -r now
+}
+
+trap finish EXIT SIGHUP SIGINT SIGQUIT SIGABRT SIGKILL SIGALRM SIGTERM
+
 mv files/flags.zip .
 rmdir files/
 
