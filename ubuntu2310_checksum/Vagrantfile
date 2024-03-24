@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.provider 'virtualbox' do |vb|
+    vb.name = 'Ubuntu 23.10 checksum'
+    vb.memory = '1024'
+  end
+
+  config.vm.hostname = "ubuntu2310-checksum"
+
+  config.vm.box = "bento/ubuntu-23.10"
+  config.vm.box_version = "202402.01.0"
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+
+  config.vm.network "private_network", ip: "192.168.10.7", virtualbox__intnet: "introsec"
+  config.vm.graceful_halt_timeout = 5
+  config.vm.boot_timeout = 420
+
+  # Disable NFS sharing (==> default: Mounting NFS shared folders...)
+  config.vm.synced_folder ".", "/vagrant", type: "nfs", disabled: true
+
+  # provision
+  config.vm.provision "file", source: "files", destination: "/home/vagrant/"
+  config.vm.provision "shell", path: "provision.sh"
+end
